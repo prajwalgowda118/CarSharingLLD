@@ -2,6 +2,7 @@ package com.scaler.carsharing.carsharinglld.Controller;
 
 import com.scaler.carsharing.carsharinglld.Models.Driver;
 import com.scaler.carsharing.carsharinglld.Models.Passenger;
+import com.scaler.carsharing.carsharinglld.Models.Vehicle;
 import com.scaler.carsharing.carsharinglld.Service.RideService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +19,7 @@ public class RideController {
 
     }
 
-    @PostMapping("/RegisterUser")
+    @PostMapping("/RegisterDriver")
     public Driver registerUser(@RequestBody Driver driver) {
 
         return rideService.registerUser(driver);
@@ -30,5 +31,9 @@ public class RideController {
         return rideService.registerPassenger(passenger);
     }
 
+    @PostMapping("/RegisterVehicle")
+    public Vehicle registerVehicle(@RequestBody Vehicle vehicle) {
 
+        return rideService.registerVehicle(vehicle);
+    }
 }

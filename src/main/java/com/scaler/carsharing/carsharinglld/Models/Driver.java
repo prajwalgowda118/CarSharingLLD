@@ -1,5 +1,6 @@
 package com.scaler.carsharing.carsharinglld.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Driver extends User {
 
+    @JsonIgnore
     @OneToMany(mappedBy = "owner")
     List<Vehicle> vehicles;
 

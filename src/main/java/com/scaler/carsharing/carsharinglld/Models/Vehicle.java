@@ -26,6 +26,9 @@ public class Vehicle extends BaseModel{
     @Enumerated(EnumType.ORDINAL)
     private VehicleType vehicleType;
 
+    @Enumerated(EnumType.ORDINAL)
+    private VehicleAvailability vehicleAvailability;
+
 
 
 }

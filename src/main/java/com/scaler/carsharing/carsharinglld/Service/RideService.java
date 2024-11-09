@@ -2,12 +2,15 @@ package com.scaler.carsharing.carsharinglld.Service;
 
 
 import com.scaler.carsharing.carsharinglld.Exception.driverAlreadyExist;
+import com.scaler.carsharing.carsharinglld.Exception.notFoundExpection;
 import com.scaler.carsharing.carsharinglld.Models.Driver;
 import com.scaler.carsharing.carsharinglld.Models.Passenger;
 import com.scaler.carsharing.carsharinglld.Models.UserType;
+import com.scaler.carsharing.carsharinglld.Models.Vehicle;
 import com.scaler.carsharing.carsharinglld.Repository.DriverRepository;
 import com.scaler.carsharing.carsharinglld.Repository.PassengerRepository;
 import com.scaler.carsharing.carsharinglld.Repository.RideRepository;
+import com.scaler.carsharing.carsharinglld.Repository.VehicleRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,12 +21,13 @@ public class RideService {
     private final RideRepository rideRepository;
     private final DriverRepository driverRepository;
     private final PassengerRepository passengerRepository;
+    private final VehicleRepository vehicleRepository;
 
-    public RideService(RideRepository rideRepository, DriverRepository driverRepository, PassengerRepository passengerRepository) {
+    public RideService(RideRepository rideRepository, DriverRepository driverRepository, PassengerRepository passengerRepository, VehicleRepository vehicleRepository) {
         this.rideRepository = rideRepository;
         this.driverRepository = driverRepository;
         this.passengerRepository = passengerRepository;
-
+        this.vehicleRepository = vehicleRepository;
     }
 
     public Driver registerUser (Driver driver) {
@@ -59,5 +63,20 @@ public class RideService {
         passengerRepository.save(newPassenger);
         return newPassenger;
 
+    }
+
+    public Vehicle registerVehicle(Vehicle vehicle) {
+
+        Optional<Driver> optionalDriver=driverRepository.findByEmail(vehicle.getOwner().getEmail());
+        if (!optionalDriver.isPresent()) {
+            throw new notFoundExpection("driver not found exception");
+        }
+        Vehicle newVehicle = new Vehicle();
+        newVehicle.setName(vehicle.getName());
+        newVehicle.setOwner(optionalDriver.get());
+        newVehicle.setVehicleType(vehicle.getVehicleType());
+        vehicleRepository.save(newVehicle);
+
+        return newVehicle;
     }
 }
